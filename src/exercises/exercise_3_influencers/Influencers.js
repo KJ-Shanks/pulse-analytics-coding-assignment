@@ -21,11 +21,10 @@ const Container = styled.div({
   fontFamily: 'Helvetica, sans-serif',
 })
 
-/* TODO
-  - Make the buttons look nicer
-  - Make the cards look nicer, readability is pretty bad right now
-    - Need to add hierarchy to the data
-*/
+// TODO: Make the buttons look nicer
+const Button = styled.button`
+  margin-right: 0.5rem;
+`;
 
 const Influencers = () => {
   const [search, setSearch] = useState('')
@@ -62,10 +61,10 @@ const Influencers = () => {
     <Container>
       <h1>Pulse Analytics Take Home Assignment ✏️ </h1>
       <SearchBar setSearch={updateSearch} search={search} />
-      <button onClick={togglePrioritySort}>Sort by Priority</button>
-      <button onClick={prevPage}>Prev</button>
-      <span>Page {page + 1} of {lastPage}</span>
-      <button onClick={nextPage}>Next</button>
+      <Button onClick={togglePrioritySort}>Sort by Priority</Button>
+      <Button onClick={prevPage}>Prev</Button>
+      <span style={{ paddingRight: 8 }}>Page {page + 1} of {lastPage}</span>
+      <Button onClick={nextPage}>Next</Button>
       <InfluencerDisplay data={sortedData.slice(PAGE_LIMIT * page, PAGE_LIMIT * (page + 1))} />
     </Container>
   )

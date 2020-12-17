@@ -18,48 +18,50 @@ const PRIORITY_COLOR_MAP = {
 }
 
 const Container = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
-  grid-gap: 1rem;
   margin: 2rem 0;
 `;
 
-const InfluencerCard = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(8rem, 1fr));
-  grid-gap: 1rem 0.25rem;
-  background-color: white;
-  border-radius: 0.25rem;
-  padding: 1rem;
-  border-top: 4px solid ${props => PRIORITY_COLOR_MAP[props.priority]};
+const Field = styled.div`
+  flex: ${props => props.field === 'Title' ? '2.4' : '1'} 1 0;
 `;
 
-const CardField = styled.div`
-  ${props => props.field === 'Title' ? 'grid-column: span 2;' : ''}
+const TitleRow = styled.div`
+  display: flex;
+  padding: 0 1rem;
 
-  & h3 {
-    font-size: 0.875rem;
-    color: #577b8c;
-    margin: 0 0 0.25rem;
+  & div {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+    color: #516e7b;
   }
-  & p {
-    margin: 0;
-  }
+`;
+
+const InfluencerRow = styled.div`
+  display: flex;
+  background-color: white;
+  border-radius: 0.25rem;
+  padding: 0 1rem;
+  margin-bottom: 0.5rem;
+  border-left: 4px solid ${props => PRIORITY_COLOR_MAP[props.priority]};
 `;
 
 const InfluencerDisplay = ({ data }) => {
+  const fields = Object.keys(DATA_MAP);
   return (
     <Container>
-
+      <TitleRow>
+        {fields.map((field) => (
+          <Field key={`TitleRow_${field}`} field={field}>{field}</Field>
+        ))}
+      </TitleRow>
       {data.map(influencer => (
-        <InfluencerCard key={influencer.member} priority={influencer.priority}>
-          {Object.keys(DATA_MAP).map((key) => (
-            <CardField key={`${influencer.member}_${key}`} field={key}>
-              <h3>{key}</h3>
-              <p>{influencer[DATA_MAP[key]]}</p>
-            </CardField>
+        <InfluencerRow key={influencer.member} priority={influencer.priority}>
+          {fields.map((field) => (
+            <Field key={`${influencer.member}_${field}`} field={field}>
+              <p>{influencer[DATA_MAP[field]]}</p>
+            </Field>
           ))}
-        </InfluencerCard>
+        </InfluencerRow>
       ))}
     </Container>
   );
